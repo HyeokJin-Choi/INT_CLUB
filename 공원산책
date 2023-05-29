@@ -96,3 +96,4 @@ vector<int> solution(vector<string> park, vector<string> routes) {
     /*최종 위치 정보인 W와 H를 answer 벡터에 저장.answer 벡터를 반환하여 결과를 반환*/
 }
 //Error - dumped
+해결중에 있습니다. 저에게 어떤 오류가 있는지 잘 찾아지질 않습니다. 혹시나 찾으신다면 언제든 말씀해주세요.
