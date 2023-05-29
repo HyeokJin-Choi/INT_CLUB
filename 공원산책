@@ -1,0 +1,98 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <sstream>
+
+using namespace std;
+
+//필요한 헤더 파일과 std 네임스페이스를 사용함
+
+vector<int> solution(vector<string> park, vector<string> routes) {
+    vector<int> answer(2, 0); // 초기 위치 (0, 0)로 설정
+
+    int H = -1, W = -1;
+    for (int i = 0; i < park.size(); i++) {
+        for (int j = 0; j < park[i].size(); j++) {
+            if (park[i][j] == 'S') {
+                H = i;
+                W = j;
+                break;
+            }
+        }
+        if (H != -1 && W != -1) {
+            break;
+        }
+    }
+    /*solution 함수의 매개변수로 주어진 park와 routes 벡터를 사용함.
+    answer 벡터를 초기화하여 위치 정보를 저장할 공간을 만듭니다.초기 위치는(0, 0)으로 설정.
+        이중 for 루프를 사용하여 park 벡터를 탐색하면서 'S' 위치를 찾는다. 'S'의 행 번호를 H 변수에, 열 번호를 W 변수에 저장함
+        'S' 위치를 찾으면 외부 반복문을 탈출함.*/
+
+    for (const string& route : routes) { //routes 벡터의 각 요소를 route 변수에 차례대로 할당하여 반복. route는 하나의 명령을 나타내는 문자열.
+        istringstream iss(route); //istringstream 클래스를 사용하여 route 문자열을 스트림으로 변환. istringstream은 문자열을 입력으로 받아서 원하는 타입으로 변환할 수 있는 기능을 제공하는 클래스.
+        string op;
+        int distance;
+        iss >> op >> distance;  //iss 스트림에서 op 변수와 distance 변수로 값을 추출. >> 연산자를 사용하여 스트림에서 값을 읽어와 변수에 할당. 첫 번째로 읽은 값은 op에 할당되고, 두 번째로 읽은 값은 distance에 할당.
+
+        if (op == "N") {
+            int def = H;
+            for (int i = 1; i <= distance; i++) {
+                if (H - i < 0 || park[H - i][W] == 'X') {
+                    H = def;
+                    break;
+                }
+                else {
+                    H--;
+                }
+            }
+        }
+        else if (op == "S") {
+            int def = H;
+            for (int i = 1; i <= distance; i++) {
+                if (H + i >= park.size() || park[H + i][W] == 'X') {
+                    H = def;
+                    break;
+                }
+                else {
+                    H++;
+                }
+            }
+        }
+        else if (op == "W") {
+            int def = W;
+            for (int i = 1; i <= distance; i++) {
+                if (W - i < 0 || park[H][W - i] == 'X') {
+                    W = def;
+                    break;
+                }
+                else {
+                    W--;
+                }
+            }
+        }
+        else if (op == "E") {
+            int def = W;
+            for (int i = 1; i <= distance; i++) {
+                if (W + i >= park[H].size() || park[H][W + i] == 'X') {
+                    W = def;
+                    break;
+                }
+                else {
+                    W++;
+                }
+            }
+        }
+    }
+    /*routes 벡터를 반복하면서 각각의 route를 처리함.
+    istringstream을 사용하여 route 문자열을 파싱하여 op와 distance 변수에 값을 할당.
+        op의 값에 따라 분기하여 해당 방향으로 이동함. (N: 북쪽, S : 남쪽, W : 서쪽, E : 동쪽)
+        이동 거리(distance)만큼 반복하면서 장애물('X')을 만나거나 공원 범위를 벗어나면 이동을 중단.
+        이동 중단 시 이전 위치(def)로 돌아감 */
+
+    answer[0] = W;
+    answer[1] = H;
+
+    return answer;
+    /*최종 위치 정보인 W와 H를 answer 벡터에 저장.answer 벡터를 반환하여 결과를 반환*/
+}
+//Error - dumped
