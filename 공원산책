@@ -10,7 +10,7 @@ using namespace std;
 vector<int> solution(vector<string> park, vector<string> routes) {
     vector<int> answer(2, 0); // 초기 위치 (0, 0)로 설정
 
-    int H = -1, W = -1;
+    int H,W; // H = -1, W = -1;
     for (int i = 0; i < park.size(); i++) {
         for (int j = 0; j < park[i].size(); j++) {
             if (park[i][j] == 'S') {
@@ -18,9 +18,6 @@ vector<int> solution(vector<string> park, vector<string> routes) {
                 W = j;
                 break;
             }
-        }
-        if (H != -1 && W != -1) {
-            break;
         }
     }
     /*solution 함수의 매개변수로 주어진 park와 routes 벡터를 사용함.
@@ -37,7 +34,7 @@ vector<int> solution(vector<string> park, vector<string> routes) {
         if (op == "N") {
             int def = H;
             for (int i = 1; i <= distance; i++) {
-                if (H - i < 0 || park[H - i][W] == 'X') {
+                if (def - i < 0 || park[def - i][W] == 'X') {
                     H = def;
                     break;
                 }
@@ -49,7 +46,7 @@ vector<int> solution(vector<string> park, vector<string> routes) {
         else if (op == "S") {
             int def = H;
             for (int i = 1; i <= distance; i++) {
-                if (H + i >= park.size() || park[H + i][W] == 'X') {
+                if (def + i >= park.size() || park[def + i][W] == 'X') {
                     H = def;
                     break;
                 }
@@ -61,7 +58,7 @@ vector<int> solution(vector<string> park, vector<string> routes) {
         else if (op == "W") {
             int def = W;
             for (int i = 1; i <= distance; i++) {
-                if (W - i < 0 || park[H][W - i] == 'X') {
+                if (def - i < 0 || park[H][def - i] == 'X') {
                     W = def;
                     break;
                 }
@@ -73,7 +70,7 @@ vector<int> solution(vector<string> park, vector<string> routes) {
         else if (op == "E") {
             int def = W;
             for (int i = 1; i <= distance; i++) {
-                if (W + i >= park[H].size() || park[H][W + i] == 'X') {
+                if (def + i >= park[H].size() || park[H][def + i] == 'X') {
                     W = def;
                     break;
                 }
@@ -89,12 +86,9 @@ vector<int> solution(vector<string> park, vector<string> routes) {
         이동 거리(distance)만큼 반복하면서 장애물('X')을 만나거나 공원 범위를 벗어나면 이동을 중단.
         이동 중단 시 이전 위치(def)로 돌아감 */
 
-    answer[0] = W;
-    answer[1] = H;
+    answer[0] = H;
+    answer[1] = W;
 
     return answer;
     /*최종 위치 정보인 W와 H를 answer 벡터에 저장.answer 벡터를 반환하여 결과를 반환*/
 }
-//Error - dumped
-
- 
