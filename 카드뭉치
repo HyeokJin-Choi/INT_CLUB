@@ -1,0 +1,31 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(vector<string> cards1, vector<string> cards2, vector<string> goal) {
+    string result = "";
+    int Cards_1_Index = 0;
+    int Cards_2_Index = 0;
+    int Goal_Index = 0;
+    for (int i = 0; i < goal.size(); i++) {
+        if (goal[Goal_Index] == cards1[Cards_1_Index]) {
+            Goal_Index += 1;
+            Cards_1_Index += 1;
+        }
+        else if (goal[Goal_Index] == cards2[Cards_2_Index]) {
+            Goal_Index += 1;
+            Cards_2_Index += 1;
+        }
+        else {
+            break;
+        }
+    }
+    if (Goal_Index == goal.size()) {
+        result = "Yes";
+    }
+    else {
+        result = "No";
+    }
+    return result;
+}
